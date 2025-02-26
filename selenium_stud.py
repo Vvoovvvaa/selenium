@@ -27,23 +27,26 @@ time.sleep(3)
 
 videos = driver.find_elements(By.XPATH, "//ytd-video-renderer")[:10]
 
-for video in videos:
-    try:
-        title = video.find_element(By.XPATH, ".//h3/a").text
-        metadata = video.find_elements(By.XPATH, ".//div//span[@class='inline-metadata-item style-scope ytd-video-meta-block']")
-        if len(metadata) > 0:
-            views = metadata[0].text
-            if len(metadata) > 1: 
-               data_video = metadata[1].text 
+def logika():
+    for video in videos:
+        try:
+            title = video.find_element(By.XPATH, ".//h3/a").text
+            metadata = video.find_elements(By.XPATH, ".//div//span[@class='inline-metadata-item style-scope ytd-video-meta-block']")
+            if len(metadata) > 0:
+                views = metadata[0].text
+                if len(metadata) > 1: 
+                    data_video = metadata[1].text 
+                else:
+                    print("No information")
             else:
-                print("No information")
-        else:
-            print("No information")    
+                print("No information")    
 
-        output = f"{title}, {views}, {data_video}"
-        write_into_file("find_results.txt", output)
+            output = f"{title}, {views}, {data_video}"
+            write_into_file("find_results.txt", output)
 
-    except Exception as e:
-        print(f"Ошибка: {e}")
+        except Exception as e:
+            print(f"Ошибка: {e}")
 
 time.sleep(7)  
+if __name__=="__main__":
+    logika()
